@@ -1,0 +1,42 @@
+{
+  "name": "keiron-app",
+  "version": "1.0.0",
+  "description": "Keiron test app",
+  "main": "index.js",
+  "scripts": {
+    "start":"node ./server/index.js",
+    "serve": "webpack-dev-server --mode development --open --port 3000",
+    "build": "webpack --mode production"
+  },
+  "keywords": [
+    "test",
+    "apply"
+  ],
+  "author": "Jose Veliz (Duccem)",
+  "license": "ISC",
+  "dependencies": {
+    "@babel/core": "^7.9.6",
+    "@babel/preset-env": "^7.9.6",
+    "@babel/preset-react": "^7.9.4",
+    "babel-loader": "^8.1.0",
+    "bcryptjs": "^2.4.3",
+    "bootstrap": "^4.4.1",
+    "chalk": "^4.0.0",
+    "cors": "^2.8.5",
+    "css-loader": "^3.5.3",
+    "dotenv": "^8.2.0",
+    "dotenv-webpack": "^1.7.0",
+    "express": "^4.17.1",
+    "html-webpack-plugin": "^4.3.0",
+    "jsonwebtoken": "^8.5.1",
+    "morgan": "^1.10.0",
+    "mysql2": "^2.1.0",
+    "react": "^16.13.1",
+    "react-dom": "^16.13.1",
+    "react-router-dom": "^5.1.2",
+    "style-loader": "^1.2.1",
+    "webpack": "^4.43.0",
+    "webpack-cli": "^3.3.11",
+    "webpack-dev-server": "^3.10.3"
+  }
+}
