@@ -1,7 +1,5 @@
 const consulter = require('../../libs/consulter');
 const Encript = require('../../libs/encript');
-const jwt = require('jsonwebtoken');
-const { TOKEN_KEY } = require('../../keys');
 
 const encript = new Encript();
 
@@ -30,12 +28,10 @@ class UsuariosController {
             if (!usuario || !password) return Unauthorized;
             const data = await consulter.query(`SELECT * FROM usuarios WHERE nombre = '${usuario}' or email = '${usuario}'`);
             if (!data[0]) return Unauthorized;
-            console.log('a ver')
             let valid = await encript.validar(password, data[0].pass);
             if (!valid) return Unauthorized;
             delete data[0].pass;
-            const token = jwt.sign({ _id: data[0].nombre }, TOKEN_KEY || "2423503", { expiresIn: 60 * 60 * 24 });
-            return { response: { data: data[0] }, token, code: 200 };
+            return { response: { data: data[0] }, code: 200 };
         } catch (error) {
             throw new Error(`Error al hacer login, ${error}`);
         }
@@ -48,7 +44,7 @@ class UsuariosController {
     
             newUser.id = insertId
             delete newUser.pass;
-            return { response: {  data: newUser },token, code: 200 };
+            return { response: {  data: newUser }, code: 200 };
         } catch (error) {
             throw new Error(`Error al hacer signup, ${error}`);
         }

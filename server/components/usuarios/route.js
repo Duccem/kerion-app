@@ -15,8 +15,8 @@ router.get('/', async (req, res)=>{
 router.post('/login', async (req, res)=>{
     let {data} = req.body;
     try {
-        let { code, response, message, token } = await controller.login(data.user,data.password);
-        return res.status(code).json(message || {data:response.data, token});
+        let { code, response, message } = await controller.login(data.user,data.password);
+        return res.status(code).json(message || {data:response.data});
     } catch (error) {
         console.log(error);
         return res.status(500).json({message: 'Internal Error'});
@@ -26,24 +26,14 @@ router.post('/login', async (req, res)=>{
 router.post('/signup', async (req, res)=>{
     let { data } = req.body;
     try {
-        let { code, response,token } = await controller.signup(data);
-        return res.status(code).json({data:response.data,token});
+        let { code, response } = await controller.signup(data);
+        return res.status(code).json({data:response.data});
     } catch (error) {
         console.log(error);
         return res.status(500).json({message: 'Internal Error'});
     } 
 });
 
-router.post('/sesion', async(req, res)=>{
-    let { token } = req.body;
-    try {
-        let { code, response, message } = await controller.validate(token);
-        return res.status(code).json(message || response);
-    } catch (error) {
-        console.log(error);
-        return res.status(500).json({message: 'Internal Error'});
-    } 
-});
 router.post('/encript', async (req,res)=>{
     let { password } = req.body;
     try {
