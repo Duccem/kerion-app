@@ -1,6 +1,31 @@
 import React, { Component } from 'react'
+import axios from "axios";
 
 export default class Login extends Component {
+    constructor(){
+        super();
+        this.state = {
+            user:'',
+            email:'',
+            password: ''
+        }
+    }
+    async signUp(e){
+        e.preventDefault();
+        try {
+            await axios.post('/api/usuarios/signup',{
+                data: {
+                    nombre:this.state.user,
+                    email:this.state.email,
+                    pass: this.state.password,
+                    tipouser_id: 2
+                }
+            });
+            this.props.history.push('/');
+        } catch (error) {
+            console.log(error)
+        }
+    }
     render() {
         return (
             <div className="container col-md-7 mt-5">
@@ -11,10 +36,12 @@ export default class Login extends Component {
                         </h3>
                     </div>
                     <div className="card-body">
-                        <form action="/user/signup" enctype="multipart/form-data" method="POST" className="needs-validation" novalidate>
+                        <form className="needs-validation" onSubmit={(e)=>this.signUp(e)} novalidate>
                             <div className="form-group">
                                 <label for="username" className="">Username:</label>
-                                <input className="form-control " type="text" name="username" id="" placeholder="Username" required />
+                                <input className="form-control " type="text" 
+                                onChange={(e)=>this.setState({user:e.target.value})}
+                                placeholder="Username" required />
                                 <div className="valid-feedback">
                                     Looks good!
                                 </div>
@@ -24,7 +51,9 @@ export default class Login extends Component {
                             </div>
                             <div className="form-group">
                                 <label for="email" className="">Email:</label>
-                                <input className="form-control " type="text" name="email" id="" placeholder="Email" required />
+                                <input className="form-control " type="text" 
+                                    onChange={(e)=>this.setState({email:e.target.value})}
+                                 placeholder="Email" required />
                                 <div className="valid-feedback">
                                     Looks good!
                                 </div>
@@ -34,7 +63,9 @@ export default class Login extends Component {
                             </div>
                             <div className="form-group">
                                 <label for="password" className="">Password:</label>
-                                <input className="form-control " type="password" name="password" id="" placeholder="password" required />
+                                <input className="form-control " type="password" 
+                                onChange={(e)=>this.setState({password:e.target.value})}
+                                placeholder="password" required />
                                 <div className="valid-feedback">
                                     Looks good!
                                 </div>
@@ -43,7 +74,7 @@ export default class Login extends Component {
                                 </div>
                             </div>                            
                             <div className="form-group">
-                                <button className="btn btn-success">
+                                <button className="btn btn-success" type='submit'>
                                     <i className="fas fa-upload"></i> SignIn
                                 </button>
                             </div>

@@ -19,7 +19,7 @@ class TicketController {
         try {
             if (isNaN(id)) return { message: 'The given ID doesn`t have the correct numeric format', code: 400 };
     
-            let data = await consult.getOne('ticket', id, query);
+            let data = await consulter.getOne('ticket', id, query);
     
             if (!data) return {message: 'Element not found', code: 404};
             let response = { data };
@@ -34,7 +34,7 @@ class TicketController {
         let { data } = body;
         let newTicket = data;
         try {
-            let { insertId } = await consult.create('ticket', newTicket);
+            let { insertId } = await consulter.create('ticket', newTicket);
             newTicket.id = insertId;
             let response = { message: "created", data:newTicket };
             return { response, code: 201 };
@@ -49,7 +49,7 @@ class TicketController {
         let newTicket = data;
         try {
             if(isNaN(id)) return { message: 'The given ID doesn`t have the correct numeric format', code: 400 };
-            let { affectedRows } = await consult.update(model, id, newTicket);
+            let { affectedRows } = await consulter.update('ticket', id, newTicket);
             let response = { message:'Updated' };
             return { response, code: 201 };
         } catch (error) {
@@ -61,7 +61,7 @@ class TicketController {
         let { id } = params;
         try {
             if(isNaN(id)) return { message: 'The given ID doesn`t have the correct numeric format', code: 400 };
-            await consult.remove('ticket', id);
+            await consulter.remove('ticket', id);
             return { message: 'Deleted', code: 200 };
         } catch (error) {
             console.log(`Error en el controlador ${model}, error: ${error}`);
